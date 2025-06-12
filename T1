@@ -1,0 +1,28 @@
+import requests
+city_name = "Mumbai"
+api_key = "7f3fe070fb641332807ba83b1e35dc6e"
+url = f"https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={api_key}&units=metric"
+response = requests.get(url)
+if response.status_code == 200:
+    data = response.json()
+    print('Weather is', data['weather'][0]['description'])
+    print('Current Temperature is', data['main']['temp'])
+    print('Current Temperature Feels like is', data['main']['feels_like'])
+    print('Humidity is', data['main']['humidity'])
+else:
+    print(f'Response code is {response.status_code}')
+
+import matplotlib.pyplot as plt
+labels = ['Temperature (°C)', 'Feels Like (°C)', 'Humidity (%)']
+values = [28.39, 32.24, 75]
+colors = ['blue', 'red', 'green']
+
+# Create bar chart
+plt.bar(labels, values, color=colors)
+plt.title('Current Weather Conditions: Overcast Clouds')
+plt.ylim(0, 100)
+# Add data labels
+for i, v in enumerate(values):
+    plt.text(i, v + 2, f"{v:.1f}", ha='center')
+
+plt.show()
